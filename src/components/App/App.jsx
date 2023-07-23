@@ -14,7 +14,7 @@ const imagesPerPage = 12;
 export const App = () => {
   const abortCtrl = useRef();
 const [images, setImages] = useState([]);
-const [query, setQuery] = useState('');
+const [value, setValue] = useState('');
 const [currentPage, setCurrentPage] = useState(1);
 const [error, setError] = useState(null);
 const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +22,7 @@ const [isLastPage, setIsLastPage] = useState(false);
 
 
   useEffect(() => {
-    if (query === '') {
+    if (value === '') {
       return;
     }
 
@@ -38,14 +38,14 @@ const [isLastPage, setIsLastPage] = useState(false);
         setError(null);
 
         const data = await getImagesAPI(
-          query,
+          value,
           currentPage,
           imagesPerPage,
           abortCtrl.current.signal
         );
 
         if (data.hits.length === 0) {
-          return toast.info('Sorry, no images for your query...', {
+          return toast.info('Sorry, no images for your search...', {
             position: toast.POSITION.TOP_RIGHT,
           });
         } else if (currentPage === 1) {
@@ -72,14 +72,14 @@ const [isLastPage, setIsLastPage] = useState(false);
       }
     };
     getImages();
-  }, [currentPage, query]);
+  }, [currentPage, value]);
 
-  const handleSearchSubmit = newQuery => {
-    if (newQuery === query) {
+  const handleSearchSubmit = newValue => {
+    if (newValue === value) {
       return;
     }
 
-    setQuery(newQuery);
+    setValue(newValue);
     setCurrentPage(1);
     setImages([]);
     setError(null);

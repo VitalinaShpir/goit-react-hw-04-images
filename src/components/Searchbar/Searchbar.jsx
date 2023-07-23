@@ -10,18 +10,18 @@ import {
 } from './Searchbar.styled';
 
 export const Searchbar = ({ onSubmit }) => {
-  const [query, setQuery] = useState('');
+  const [value, setValue] = useState('');
 
   const handleInputChange = e => {
-    setQuery(e.target.value);
+    setValue(e.target.value);
   };
 
   const handleSearchSubmit = e => {
     e.preventDefault();
-    if (!query.trim()) {
+    if (!value.trim()) {
       return;
     }
-    onSubmit(query);
+    onSubmit(value);
   };
 
   return (
@@ -37,7 +37,7 @@ export const Searchbar = ({ onSubmit }) => {
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
-          value={query}
+          value={value}
           onChange={handleInputChange}
         />
       </SearchForm>
